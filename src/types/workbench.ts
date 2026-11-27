@@ -29,7 +29,8 @@ export type PdfToolId =
   | 'protect'
   | 'sign'
   | 'redact'
-  | 'compare';
+  | 'compare'
+  | 'resi';
 
 export type FileCategory =
   | 'pdf'

@@ -21,6 +21,7 @@ import {
   LockOpen,
   Minimize2,
   PenTool,
+  QrCode,
   RotateCw,
   ScanText,
   Scissors,
@@ -44,6 +45,7 @@ import { runIlovePdfTool } from '../services/ilovePdfService';
 import { formatBytes } from '../utils/format';
 import { triggerBlobDownload } from '../utils/memoryManager';
 import { useI18n } from '../i18n/I18nContext';
+import { ResiGeneratorPanel } from './ResiGeneratorPanel';
 
 interface PdfToolsWorkspaceProps {
   onNavigateTab: (tab: WorkspaceTab) => void;
@@ -68,7 +70,8 @@ type InlinePanelId =
   | 'pdf-to-pdfa'
   | 'ppt-to-pdf'
   | 'scan-to-pdf'
-  | 'compare';
+  | 'compare'
+  | 'resi';
 
 interface ToolDef {
   id: PdfToolId;
@@ -112,6 +115,7 @@ const CATEGORIES: ToolCategory[] = [
       { id: 'ppt-to-pdf', label: 'POWERPOINT to PDF', desc: 'PPT/PPTX ke PDF (Cloud)', badge: 'CLOUD', icon: FileArchive, target: { kind: 'inline', panel: 'ppt-to-pdf' } },
       { id: 'excel-to-pdf', label: 'EXCEL to PDF', desc: 'XLSX/CSV ke PDF lokal', badge: 'LOCAL', icon: FileSpreadsheet, target: { kind: 'route', tab: 'converter' } },
       { id: 'html-to-pdf', label: 'HTML to PDF', desc: 'HTML/Markdown ke PDF lokal', badge: 'LOCAL', icon: FileCode2, target: { kind: 'route', tab: 'converter' } },
+      { id: 'resi', label: 'Buat Resi Otomatis', desc: 'Label pengiriman PDF + QR Link Toko', badge: 'LOCAL', icon: QrCode, target: { kind: 'inline', panel: 'resi' } },
     ],
   },
   {
@@ -426,6 +430,8 @@ export const PdfToolsWorkspace: React.FC<PdfToolsWorkspaceProps> = ({
             ))}
           </div>
         </div>
+      ) : activePanel === 'resi' ? (
+        <ResiGeneratorPanel />
       ) : (
         <div className="border border-[var(--border-strong)] bg-[var(--bg-surface)] p-5">
           <input
