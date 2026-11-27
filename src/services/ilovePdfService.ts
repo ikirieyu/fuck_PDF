@@ -17,6 +17,7 @@ const AUTH_URL = 'https://api.ilovepdf.com/v1/auth';
 const API_BASE = 'https://api.ilovepdf.com/v1';
 
 async function fetchCloudAuthToken(signal?: AbortSignal): Promise<string> {
+  let proxyError = '';
   // 1. Prefer Vercel serverless proxy (/api/cloud-auth) so key never sits in client bundle
   try {
     const proxyRes = await fetch('/api/cloud-auth', {
@@ -26,17 +27,21 @@ async function fetchCloudAuthToken(signal?: AbortSignal): Promise<string> {
     if (proxyRes.ok) {
       const data = (await proxyRes.json()) as { token?: string; error?: string };
       if (data.token) return data.token;
+    } else {
+      const txt = await proxyRes.text().catch(() => proxyRes.statusText);
+      proxyError = `Proxy /api/cloud-auth (${proxyRes.status}): ${txt}`;
     }
   } catch (err) {
     if (signal?.aborted) throw err;
-    // Fall through to local dev env var if /api/cloud-auth is unavailable (e.g. vite dev)
+    proxyError = err instanceof Error ? err.message : 'Proxy unreachable';
   }
 
   // 2. Fallback for local `vite dev` via .env.local (gitignored)
   const localKey = import.meta.env.VITE_CLOUD_PDF_PUBLIC_KEY as string | undefined;
   if (!localKey) {
     throw new Error(
-      'Cloud Engine key belum dikonfigurasi. Set CLOUD_PDF_PUBLIC_KEY di Vercel atau VITE_CLOUD_PDF_PUBLIC_KEY di .env.local.'
+      proxyError ||
+        'Cloud Engine key belum dikonfigurasi. Set CLOUD_PDF_PUBLIC_KEY di Vercel lalu Redeploy.'
     );
   }
 
