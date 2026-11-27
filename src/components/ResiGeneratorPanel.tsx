@@ -18,14 +18,14 @@ interface ResiData {
 const STORAGE_KEY = 'fuck_pdf_resi_sender_v1';
 
 const DEFAULT_DATA: ResiData = {
-  senderName: 'Annia Slim Official',
-  senderPhone: '081234567890',
-  senderAddress: 'Jl. Merdeka No. 10, Jakarta',
-  shopUrl: 'https://shopee.co.id/',
-  recipientName: 'Kiki D',
-  recipientPhone: '+6283823133753',
-  recipientAddress: 'Ds. terangrejo temanji 07/01 kec jenu kab nganjuk',
-  product: 'FD10(1)',
+  senderName: 'Nama Pengirim',
+  senderPhone: '012345678',
+  senderAddress: 'Jl. Contoh',
+  shopUrl: 'alamat / link olshop',
+  recipientName: 'Nama Penerina',
+  recipientPhone: '012345678',
+  recipientAddress: 'Jl. Contoh',
+  product: 'Nama Barang',
 };
 
 function loadInitialData(): ResiData {
