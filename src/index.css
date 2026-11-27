@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  --bg-canvas: #F4F3EF;
+  --bg-surface: #FFFFFF;
+  --bg-recessed: #EAE8E2;
+  --bg-mat: #E2DFD7;
+  --ink-primary: #141413;
+  --ink-secondary: #4D4C48;
+  --ink-muted: #6C6A64;
+  --border-hairline: #D5D2CA;
+  --border-strong: #141413;
+  --accent-signal: #C83E2B;
+  --accent-signal-hover: #A93221;
+  --accent-local: #1F6E43;
+  --accent-warn: #9A5B00;
+  --accent-info: #1E4E79;
+}
+
+@layer base {
+  html, body {
+    background-color: var(--bg-canvas);
+    color: var(--ink-primary);
+    overflow-x: hidden;
+    font-family: "IBM Plex Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  code, pre, kbd, .font-mono {
+    font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-signal);
+    outline-offset: 2px;
+  }
+}
+
+/* Crisp custom scrollbars for workbench panels */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-recessed);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B8B4AA;
+  border: 1px solid var(--bg-recessed);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8B877E;
+}
+
+/* Subtle drafting grid ONLY on empty dropzone, never around active document canvas */
+.workbench-grid {
+  background-image:
+    linear-gradient(to right, rgba(20, 20, 19, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 20, 19, 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+}

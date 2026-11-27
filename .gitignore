@@ -1,0 +1,16 @@
+# Dependencies & build output
+node_modules/
+dist/
+dist-ssr/
+.vercel/
+
+# Environment variables (NEVER commit secrets to GitHub)
+.env
+.env.local
+.env.*.local
+
+# Logs & OS files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
